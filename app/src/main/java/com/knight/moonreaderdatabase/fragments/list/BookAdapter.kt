@@ -4,6 +4,8 @@ import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.navigation.findNavController
+import com.knight.moonreaderdatabase.R
 
 import com.knight.moonreaderdatabase.placeholder.PlaceholderContent.PlaceholderItem
 import com.knight.moonreaderdatabase.databinding.SingleBookBinding
@@ -32,6 +34,9 @@ class BookAdapter(
         val item = values[position]
         holder.idView.text = item.id
         holder.contentView.text = item.content
+        holder.itemView.setOnClickListener {
+            holder.itemView.findNavController().navigate(R.id.action_bookFragment_to_addFragment)
+        }
     }
 
     override fun getItemCount(): Int = values.size
