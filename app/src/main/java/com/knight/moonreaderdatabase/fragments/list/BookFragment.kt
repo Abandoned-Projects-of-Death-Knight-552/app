@@ -9,6 +9,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.knight.moonreaderdatabase.R
 import com.knight.moonreaderdatabase.database.BookViewModel
 import com.knight.moonreaderdatabase.database.LightNovel
@@ -35,29 +37,44 @@ class BookFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         val view = inflater.inflate(R.layout.main_book_list, container, false)
+        val recyclerView: RecyclerView = view.findViewById(R.id.mainList)
+        val fab_add_button: FloatingActionButton = view.findViewById(R.id.FAB_add_new)
 
-        // Set the adapter
 
-
+        //setting database
         bookViewModel = ViewModelProvider(this)[BookViewModel::class.java]
 
-        val badapter = context?.let { BookAdapter(it) }
+        // Set the adapter
+        val ADAPTER = context?.let { BookAdapter(it) }
         bookViewModel.allBooks.observe(viewLifecycleOwner) { books ->
-            badapter!!.setBooks(books)
+            ADAPTER!!.setBooks(books)
         }
-
-
-
-        if (view is RecyclerView) {
-            with(view) {
-                layoutManager = when {
-                    columnCount <= 1 -> LinearLayoutManager(context)
-                    else -> GridLayoutManager(context, columnCount)
-                }
-                adapter = badapter
-
+        with(recyclerView) {
+            adapter = ADAPTER
+            layoutManager = when {
+                columnCount <= 1 -> LinearLayoutManager(context)
+                else -> GridLayoutManager(context, columnCount)
             }
+
         }
+
+        fab_add_button.setOnClickListener {
+            findNavController().navigate(R.id.action_bookFragment_to_addFragment)
+        }
+
+
+
+
+//        if (view is RecyclerView) {
+//            with(view) {
+//                layoutManager = when {
+//                    columnCount <= 1 -> LinearLayoutManager(context)
+//                    else -> GridLayoutManager(context, columnCount)
+//                }
+//                adapter = badapter
+//
+//            }
+//        }
         return view
     }
 
