@@ -36,4 +36,8 @@ class BookViewModel(application: Application): AndroidViewModel(application) {
     fun fetchBook(id: Int): LightNovel {
         return repository.fetchBook(id)
     }
+
+    fun fetchLiveBook(id: Int): LiveData<LightNovel> {
+        return repository.fetchLiveBook(id)
+    }
 }

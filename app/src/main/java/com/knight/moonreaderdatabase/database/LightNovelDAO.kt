@@ -26,5 +26,8 @@ interface LightNovelDAO {
     @Query("SELECT * FROM `Series List` WHERE id LIKE :id")
     fun getOneBook(id: Int): LightNovel
 
+    @Query("SELECT * FROM `Series List` WHERE id LIKE :id")
+    fun getOneLiveBook(id: Int): LiveData<LightNovel>
+
 
 }

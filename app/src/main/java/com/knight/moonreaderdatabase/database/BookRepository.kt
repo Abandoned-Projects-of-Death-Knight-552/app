@@ -19,4 +19,8 @@ class BookRepository(private val dao: LightNovelDAO) {
     fun fetchBook(id: Int): LightNovel {
         return dao.getOneBook(id)
     }
+
+    fun fetchLiveBook(id: Int): LiveData<LightNovel> {
+        return dao.getOneLiveBook(id)
+    }
 }

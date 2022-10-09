@@ -32,7 +32,11 @@ class BookAdapter(context: Context) : RecyclerView.Adapter<BookAdapter.ViewHolde
         val item = books[position]
         holder.idView.text = item.id.toString()
         holder.contentView.text = item.title
-
+        holder.itemView.setOnClickListener {
+//            holder.itemView.findNavController().navigate(R.id.action_bookFragment_to_detailFragment)
+            val action = BookFragmentDirections.actionBookFragmentToDetailFragment(item.id)
+            holder.itemView.findNavController().navigate(action)
+        }
     }
 
     override fun getItemCount(): Int = books.size
