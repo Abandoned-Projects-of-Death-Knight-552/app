@@ -5,13 +5,16 @@ package com.knight.moonreaderdatabase.fragments.detail
 import android.app.AlertDialog
 import android.content.ActivityNotFoundException
 import android.content.Intent
+import android.graphics.Color
 import android.net.Uri
 import android.os.Bundle
 import android.view.*
+import android.webkit.URLUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
+import com.bumptech.glide.Glide
 import com.knight.moonreaderdatabase.R
 import com.knight.moonreaderdatabase.database.BookViewModel
 import com.knight.moonreaderdatabase.database.LightNovel
@@ -50,10 +53,22 @@ class DetailFragment : Fragment() {
             bookLN = book
             binding.detailTitle.text = book.title
 
-            if (book.synopsis != null) {
+            val image = binding.detailCover
+            val imageUrl = bookLN.coverRemote
+            val valid = URLUtil.isValidUrl(imageUrl)
+            if (valid) {
+                Glide.with(requireContext())
+                    .load(bookLN.coverRemote)
+                    .error(R.drawable.ic_image_error)
+                    .into(image)
+            }
+
+            if (book.synopsis != null && book.synopsis.length >= 2) {
                 binding.detailSynopsis.text = book.synopsis
             }
 
+            if (URLUtil.isValidUrl(book.download)) {
+            binding.detailButton.setBackgroundColor(Color.RED) }
             binding.detailButton.setOnClickListener {
                 val intent = Intent(Intent.ACTION_VIEW, Uri.parse(book.download))
                 try {

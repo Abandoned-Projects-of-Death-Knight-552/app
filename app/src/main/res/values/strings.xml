@@ -115,6 +115,9 @@
     <string name="attachment_summary_on">Automatically download attachments for incoming emails
     </string>
     <string name="attachment_summary_off">Only download attachments when manually requested</string>
-    <string name="placeholder_plot">Settings allow users to change the functionality and behavior of an application. Settings can affect background behavior, such as how often the application synchronizes data with the cloud, or they can be more wide-reaching, such as changing the contents and presentation of the user interface. The recommended way to integrate user configurable settings into your application is to use the AndroidX Preference Library. This library manages the user interface and interacts with storage so that you define only the individual settings that the user can configure. The library comes with a Material theme that provides a consistent user experience across devices and OS versions.</string>
+    <string name="placeholder_plot">Synopsis not available</string>
+    <string name="detail_frag_title">Sample Title</string>
+    <string name="detail_frag_download">MEGA</string>
+    <string name="detail_frag_image_description">Book Cover</string>
 
 </resources>

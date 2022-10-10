@@ -19,7 +19,8 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="32dp"
             android:padding="8dp"
-            android:text="Sample Title"
+            android:textSize="24sp"
+            android:text="@string/detail_frag_title"
             android:textColor="@color/black"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -30,7 +31,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
-            android:text="MEGA"
+            android:text="@string/detail_frag_download"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/detail_title" />
 
@@ -39,10 +40,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
-            android:contentDescription="Book Cover"
+            android:contentDescription="@string/detail_frag_image_description"
             android:minWidth="250dp"
             android:minHeight="250dp"
-            android:src="@drawable/ic_launcher_background"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
@@ -50,6 +50,7 @@
 
         <TextView
             android:id="@+id/detail_synopsis"
+            android:textSize="15sp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"

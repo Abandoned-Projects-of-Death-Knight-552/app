@@ -1,17 +1,25 @@
 package com.knight.moonreaderdatabase.fragments.update
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
+import com.bumptech.glide.Glide
 import com.knight.moonreaderdatabase.R
 import com.knight.moonreaderdatabase.database.BookViewModel
 import com.knight.moonreaderdatabase.database.LightNovel
 import com.knight.moonreaderdatabase.databinding.FragmentUpdateBinding
+import com.knight.moonreaderdatabase.utils.MainVMFactory
+import com.knight.moonreaderdatabase.utils.RFRepo
+import com.knight.moonreaderdatabase.utils.RFViewM
+import com.knight.moonreaderdatabase.utils.Validator
+import java.io.IOException
 
 
 class UpdateFragment : Fragment() {
@@ -21,6 +29,7 @@ class UpdateFragment : Fragment() {
     private val binding get() = _binding!!
 
     private lateinit var bookViewModel: BookViewModel
+    private lateinit var viewModel: RFViewM
 
 
     override fun onCreateView(
@@ -32,6 +41,12 @@ class UpdateFragment : Fragment() {
 
         val view = binding.root
         val bookid = args.bookID
+
+        val repo = RFRepo()
+        val viewMfactory = MainVMFactory(repo)
+        viewModel = ViewModelProvider(this, viewMfactory)[RFViewM::class.java]
+
+
 
 //        setting database
         bookViewModel = ViewModelProvider(this)[BookViewModel::class.java]
@@ -46,12 +61,32 @@ class UpdateFragment : Fragment() {
 
         }
 
+        binding.updateFetch.setOnClickListener {
+            try {
+                viewModel.getBook(binding.updateTitle.text.toString())
+
+                viewModel.lolRes.observe(viewLifecycleOwner) {
+                        resp -> binding.updateSynopsis.setText(resp.Media!!.description.toString())
+                    binding.updateCoverRemote.setText(resp.Media!!.coverImage!!.large.toString())
+
+                    Glide.with(requireContext())
+                        .load(resp.Media!!.coverImage!!.large)
+                        .error(R.drawable.ic_image_error)
+                        .into(binding.prevContent)
+
+                }
+            } catch (_: IOException) {
+
+        }
+
+
+        }
+
 
         binding.BTNUpdate.setOnClickListener {
             updateEntry(bookid)
         }
 
-//
 
 
         return view
@@ -63,10 +98,29 @@ class UpdateFragment : Fragment() {
         val synopsis = binding.updateSynopsis.text.toString()
         val coverUrl = binding.updateCoverRemote.text.toString()
         val filepath = binding.updateFilePath.text.toString()
-        bookViewModel.updateBook(LightNovel(bookid, title, synopsis, download, coverUrl, filepath ))
+
+        when (Validator.validateEntry(title, download, synopsis, coverUrl, filepath)) {
+            110 -> Toast.makeText(context, "Title field is Empty", Toast.LENGTH_SHORT).show()
+            120 -> Toast.makeText(context, "Download field is Empty", Toast.LENGTH_SHORT).show()
+            121 -> Toast.makeText(context, "Download is not valid url", Toast.LENGTH_SHORT).show()
+            130 -> Toast.makeText(context, "Cover is not valid url", Toast.LENGTH_SHORT).show()
+            200 -> {
+                bookViewModel.updateBook(
+                    LightNovel(
+                        bookid,
+                        title,
+                        synopsis,
+                        download,
+                        coverUrl,
+                        filepath
+                    )
+                )
+                val action = UpdateFragmentDirections.actionUpdateFragmentToDetailFragment(bookid)
+                findNavController().navigate(action)
+            }
+        }
 
 //        val action = UpdateFragmentDirections.
-        findNavController().navigate(R.id.action_updateFragment_to_bookFragment)
     }
 
 }
