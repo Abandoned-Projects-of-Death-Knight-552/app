@@ -2,6 +2,7 @@
 
 package com.knight.moonreaderdatabase.fragments.detail
 
+import android.app.AlertDialog
 import android.content.ActivityNotFoundException
 import android.content.Intent
 import android.net.Uri
@@ -13,6 +14,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.knight.moonreaderdatabase.R
 import com.knight.moonreaderdatabase.database.BookViewModel
+import com.knight.moonreaderdatabase.database.LightNovel
 import com.knight.moonreaderdatabase.databinding.FragmentDetailBinding
 
 class DetailFragment : Fragment() {
@@ -23,6 +25,7 @@ class DetailFragment : Fragment() {
     private val binding get() = _binding!!
 
     private lateinit var bookViewModel: BookViewModel
+    private lateinit var bookLN: LightNovel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -44,6 +47,7 @@ class DetailFragment : Fragment() {
 
         //setting view
         bookViewModel.fetchLiveBook(bookid).observe(viewLifecycleOwner) { book ->
+            bookLN = book
             binding.detailTitle.text = book.title
 
             if (book.synopsis != null) {
@@ -79,8 +83,26 @@ class DetailFragment : Fragment() {
                 findNavController().navigate(action)
             }
 
-            R.id.detail_menu_delete_book -> {}
+            R.id.detail_menu_delete_book -> {
+                deleteBook(bookLN)
+            }
         }
         return super.onOptionsItemSelected(item)
+    }
+
+    private fun deleteBook(Ln: LightNovel) {
+        val builder = AlertDialog.Builder(requireContext())
+        builder.setPositiveButton("Delete") {_,_ ->
+            bookViewModel.deleteBook(Ln)
+            findNavController().navigate(R.id.action_detailFragment_to_bookFragment)
+
+        }
+        builder.setNegativeButton("Cancel") {_,_ ->}
+        builder.setTitle("Delete Entry?")
+        builder.setMessage("Are you sure you want to delete ${Ln.title}")
+
+        builder.create().show()
+
+
     }
 }

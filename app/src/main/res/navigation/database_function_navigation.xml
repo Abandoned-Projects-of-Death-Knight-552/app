@@ -16,6 +16,9 @@
         <action
             android:id="@+id/action_bookFragment_to_detailFragment"
             app:destination="@id/detailFragment" />
+        <action
+            android:id="@+id/action_bookFragment_to_settingsFragment"
+            app:destination="@id/settingsFragment" />
     </fragment>
     <fragment
         android:id="@+id/addFragment"
@@ -58,5 +61,9 @@
     <fragment
         android:id="@+id/settingsFragment"
         android:name="com.knight.moonreaderdatabase.SettingsFragment"
-        android:label="SettingsFragment" />
+        android:label="SettingsFragment" >
+        <action
+            android:id="@+id/action_settingsFragment_to_bookFragment"
+            app:destination="@id/bookFragment" />
+    </fragment>
 </navigation>

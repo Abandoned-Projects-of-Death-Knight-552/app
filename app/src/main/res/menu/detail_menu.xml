@@ -2,6 +2,6 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <item android:title="Update Book" android:icon="@drawable/ic_edit" android:id="@+id/detail_menu_update_book" app:showAsAction="ifRoom"/>
+    <item android:title="Update Book" android:icon="@drawable/ic_edit" android:id="@+id/detail_menu_update_book"/>
     <item android:title="Delete Book" android:id="@+id/detail_menu_delete_book"/>
 </menu>

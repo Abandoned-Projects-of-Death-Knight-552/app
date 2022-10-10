@@ -1,13 +1,13 @@
+@file:Suppress("DEPRECATION")
+
 package com.knight.moonreaderdatabase.fragments.list
 
 import android.os.Bundle
+import android.view.*
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -30,6 +30,7 @@ class BookFragment : Fragment() {
         val fab_add_button: FloatingActionButton = view.findViewById(R.id.FAB_add_new)
 
 
+        setHasOptionsMenu(true)
         //setting database
         bookViewModel = ViewModelProvider(this)[BookViewModel::class.java]
 
@@ -52,5 +53,19 @@ class BookFragment : Fragment() {
         }
 
         return view
+    }
+
+    @Deprecated("Deprecated in Java")
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.list_menu, menu)
+    }
+
+    @Deprecated("Deprecated in Java")
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            R.id.list_menu_setting -> findNavController().navigate(R.id.action_bookFragment_to_settingsFragment)
+        }
+
+        return super.onOptionsItemSelected(item)
     }
 }
