@@ -7,7 +7,7 @@ import retrofit2.create
 
 object RFHelper {
 
-    val base_url = "https://dominant-titmouse-83.hasura.app"
+    val base_url = "https://graphql-anilist.hasura.app/"
 
     private val client = OkHttpClient.Builder().apply {
         addInterceptor(MyInterceptor())

@@ -64,10 +64,15 @@ class UpdateFragment : Fragment() {
         binding.updateFetch.setOnClickListener {
             try {
                 viewModel.getBook(binding.updateTitle.text.toString())
+                val bob = viewModel.lolRes.value
 
-                viewModel.lolRes.observe(viewLifecycleOwner) {
-                        resp -> binding.updateSynopsis.setText(resp.Media!!.description.toString())
-                    binding.updateCoverRemote.setText(resp.Media!!.coverImage!!.large.toString())
+                viewModel.lolRes.observe(viewLifecycleOwner) { resp ->
+                    binding.updateSynopsis.setText(resp.Media!!.description.toString())
+                    if (resp.Media!!.coverImage!!.extraLarge != null) {
+                    binding.updateCoverRemote.setText(resp.Media!!.coverImage!!.extraLarge.toString())}
+                    else {
+                        binding.updateCoverRemote.setText(resp.Media!!.coverImage!!.large.toString())
+                }
 
                     Glide.with(requireContext())
                         .load(resp.Media!!.coverImage!!.large)
@@ -123,4 +128,8 @@ class UpdateFragment : Fragment() {
 //        val action = UpdateFragmentDirections.
     }
 
+    override fun onDestroyView() {
+        _binding = null
+        super.onDestroyView()
+    }
 }

@@ -17,7 +17,7 @@ interface LightNovelDAO {
     @Update
     suspend fun updateBook(lightNovel: LightNovel)
 
-    @Query("SELECT * FROM `Series List`")
+    @Query("SELECT * FROM `Series List` ORDER BY title")
     fun getAllBook(): LiveData<List<LightNovel>>
 
     @Delete
@@ -28,6 +28,4 @@ interface LightNovelDAO {
 
     @Query("SELECT * FROM `Series List` WHERE id LIKE :id")
     fun getOneLiveBook(id: Int): LiveData<LightNovel>
-
-
 }

@@ -8,6 +8,7 @@ import android.content.Intent
 import android.graphics.Color
 import android.net.Uri
 import android.os.Bundle
+import android.transition.TransitionInflater
 import android.view.*
 import android.webkit.URLUtil
 import androidx.fragment.app.Fragment
@@ -19,6 +20,7 @@ import com.knight.moonreaderdatabase.R
 import com.knight.moonreaderdatabase.database.BookViewModel
 import com.knight.moonreaderdatabase.database.LightNovel
 import com.knight.moonreaderdatabase.databinding.FragmentDetailBinding
+import java.util.concurrent.TimeUnit
 
 class DetailFragment : Fragment() {
 
@@ -30,9 +32,12 @@ class DetailFragment : Fragment() {
     private lateinit var bookViewModel: BookViewModel
     private lateinit var bookLN: LightNovel
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-    }
+//    override fun onCreate(savedInstanceState: Bundle?) {
+//        super.onCreate(savedInstanceState)
+//        val anim = TransitionInflater.from(requireContext()).inflateTransition(android.R.transition.move)
+//        sharedElementEnterTransition = anim
+//        sharedElementReturnTransition = anim
+//    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -48,8 +53,11 @@ class DetailFragment : Fragment() {
 //        setting database
         bookViewModel = ViewModelProvider(this)[BookViewModel::class.java]
 
-        //setting view
-        bookViewModel.fetchLiveBook(bookid).observe(viewLifecycleOwner) { book ->
+        if (viewLifecycleOwner != null) {
+        bookViewModel
+            .fetchLiveBook(bookid)
+            .observe(viewLifecycleOwner) {
+                book ->
             bookLN = book
             binding.detailTitle.text = book.title
 
@@ -79,7 +87,7 @@ class DetailFragment : Fragment() {
                 }
 
             }
-        }
+        }}
 
 
         return view
@@ -119,5 +127,10 @@ class DetailFragment : Fragment() {
         builder.create().show()
 
 
+    }
+
+    override fun onDestroyView() {
+        _binding = null
+        super.onDestroyView()
     }
 }

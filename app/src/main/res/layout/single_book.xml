@@ -3,15 +3,16 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
-        <TextView
-            android:id="@+id/item_number"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="@dimen/text_margin"
-            android:textAppearance="?attr/textAppearanceListItem" />
+    <TextView
+        android:id="@+id/item_number"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/text_margin"
+        android:textAppearance="?attr/textAppearanceListItem" />
 
     <ImageView
         android:id="@+id/list_cover"
+        android:contentDescription="@string/list_item_contentDescription"
         android:layout_width="102dp"
         android:layout_height="150dp"
         android:src="@drawable/ic_image_error" />
@@ -22,6 +23,6 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center_vertical"
         android:layout_margin="@dimen/text_margin"
-        android:text="Hello, I am Lorax"
+        android:text="@string/list_item_text_placeholder"
         android:textAppearance="?attr/textAppearanceListItem" />
 </LinearLayout>

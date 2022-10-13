@@ -1,9 +1,12 @@
 package com.knight.moonreaderdatabase.database
 
+import android.os.Parcelable
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import kotlinx.parcelize.Parcelize
 
+@Parcelize
 @Entity(tableName = "Series List")
 data class LightNovel (
     @PrimaryKey(autoGenerate = true) val id: Int,
@@ -12,4 +15,4 @@ data class LightNovel (
     @ColumnInfo(name = "download") val download: String?,
     @ColumnInfo(name = "coverURL") val coverRemote: String?,
     @ColumnInfo(name = "coverPath") val coverLocal: String?,
-        )
+        ): Parcelable

@@ -9,6 +9,7 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import com.google.gson.GsonBuilder
 import com.knight.moonreaderdatabase.R
 import com.knight.moonreaderdatabase.database.BookViewModel
@@ -21,6 +22,7 @@ import okhttp3.Request
 import java.io.IOException
 
 class AddFragment : Fragment() {
+    private val args: AddFragmentArgs by navArgs()
     private var _binding: FragmentAddBinding? = null
     private val vbinding get() = _binding!!
 
@@ -41,6 +43,12 @@ class AddFragment : Fragment() {
         val view =  vbinding.root
 //        requireActivity().window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_NOTHING)
 
+        if (args.book != null) {
+            vbinding.ETTitle.setText(args.book!!.title)
+            vbinding.ETCoverRemote.setText(
+                args.book!!.coverRemote)
+            vbinding.ETSynopsis.setText(args.book!!.synopsis)
+        }
         //setting database
         bookViewModel = ViewModelProvider(this)[BookViewModel::class.java]
 
@@ -78,5 +86,10 @@ class AddFragment : Fragment() {
             }
         }
 
+    }
+
+    override fun onDestroyView() {
+        _binding = null
+        super.onDestroyView()
     }
 }

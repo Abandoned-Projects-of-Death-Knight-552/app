@@ -119,5 +119,14 @@
     <string name="detail_frag_title">Sample Title</string>
     <string name="detail_frag_download">MEGA</string>
     <string name="detail_frag_image_description">Book Cover</string>
+    <string name="detail_menu_update">Update Book</string>
+    <string name="detail_menu_delete">Delete Book</string>
+    <string name="update_frag_fetch">Fetch</string>
+    <string name="update_frag_preview">Preview</string>
+    <string name="list_menu_search">Search</string>
+    <string name="list_menu_setting">Setting</string>
+    <string name="list_item_contentDescription">Thumbnail</string>
+    <string name="list_item_text_placeholder">Hello, I am Lorax</string>
+    <string name="anilist">Anilist</string>
 
 </resources>
